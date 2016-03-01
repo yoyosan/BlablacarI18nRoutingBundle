@@ -113,7 +113,7 @@ class Router extends BaseRouter
         $currentHost = '';
 
         // if an absolute URL is requested, we set the correct host
-        if (!$referenceType && $this->hostMap) {
+        if ($referenceType && $this->hostMap) {
             $currentHost = $this->context->getHost();
             $this->context->setHost($this->hostMap[$locale]);
         }
@@ -121,13 +121,13 @@ class Router extends BaseRouter
         try {
             $url = $generator->generate($locale . I18nLoader::ROUTING_PREFIX . $name, $parameters, $referenceType);
 
-            if (!$referenceType && $this->hostMap) {
+            if ($referenceType && $this->hostMap) {
                 $this->context->setHost($currentHost);
             }
 
             return $url;
         } catch (RouteNotFoundException $ex) {
-            if (!$referenceType && $this->hostMap) {
+            if ($referenceType && $this->hostMap) {
                 $this->context->setHost($currentHost);
             }
 
